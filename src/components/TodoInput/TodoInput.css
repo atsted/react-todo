@@ -1,0 +1,8 @@
+.todo__input {
+  width: 100%;
+  padding: .5rem 0;
+  border: none;
+  outline: none;
+  font-size: .8rem;
+  box-shadow: 0 1px rgba(0, 0, 0, 0.2);
+}

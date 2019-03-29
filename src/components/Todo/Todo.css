@@ -1,0 +1,16 @@
+.todo__container {
+  margin: 0 auto;
+  max-width: 720px;
+}
+.todo__button {
+  height: 2rem;
+  border: none;
+  color: white;
+  background: inherit;
+  outline: none;
+  cursor: pointer;
+}
+.todo__button.active,
+.todo__button:hover {
+  background: #002244;
+}
