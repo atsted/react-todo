@@ -1,3 +1,7 @@
 .todo__toolbar {
   background: #003355;
 }
+.todo__container_between {
+  display: flex;
+  justify-content: space-between;
+}

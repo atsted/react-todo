@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TodoListItem from '../TodoListItem/TodoListItem'
+import { FilterState } from '../../constants'
 import './TodoList.css'
 
 class TodoList extends Component {
   getFilteredTasks() {
     switch (this.props.filterState) {
-      case 'ACTIVE':
+      case FilterState.ACTIVE:
         return this.props.tasks.filter(e => !e.done)
-      case 'DONE':
+      case FilterState.DONE:
         return this.props.tasks.filter(e => e.done)
       default:
         return this.props.tasks

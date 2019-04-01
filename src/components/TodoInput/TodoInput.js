@@ -4,7 +4,7 @@ import { addTask } from '../../actions'
 import './TodoInput.css'
 
 class TodoInput extends Component {
-  addTask(event) {
+  addTask = event => {
     const form = event.target
     const input = form.name
     const value = input.value.trim()
@@ -15,7 +15,7 @@ class TodoInput extends Component {
   render() {
     return (
       <form
-        onSubmit={this.addTask.bind(this)}
+        onSubmit={this.addTask}
         autoComplete="off">
         <input
           className="todo__input"
@@ -28,8 +28,4 @@ class TodoInput extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  addTask: text => dispatch(addTask(text))
-})
-
-export default connect(null, mapDispatchToProps)(TodoInput)
+export default connect(null, { addTask })(TodoInput)
