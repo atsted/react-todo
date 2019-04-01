@@ -1,54 +1,47 @@
-import { FilterState } from './constants'
-import {
-  ADD_TASK,
-  REMOVE_TASK,
-  UPDATE_TASK,
-  CHANGE_FILTER,
-  CLEAR_COMPLETED,
-  COMPLETE_ALL
-} from './actionTypes'
+import actions from './actions'
+import defaultState from './state'
+import { handleActions } from 'redux-actions'
 
 let uid = 0
 
-export const todoReducer = (state = [], action) => {
-  switch (action.type) {
-    case ADD_TASK:
-      return action.text.length ? [{
-          id: uid++,
-          text: action.text,
-          done: false
-        },
-        ...state
-      ] : state
-    case UPDATE_TASK:
-      const { id, text } = action.options
-      return state.map(e => {
-        if (e.id === id) {
-          if (!text) delete action.options.text
-          return { ...e, ...action.options }
-        } else return e
-      })
-    case REMOVE_TASK:
-      const newState = [...state]
-      const index = newState.findIndex(e => e.id === action.id)
-      newState.splice(index, 1)
-      return newState
-    case CLEAR_COMPLETED:
-      return state.filter(e => !e.done)
-    case COMPLETE_ALL:
-      return state.map(e => ({
-        ...e, done: true
-      }))
-    default:
-      return state
-  }
-}
-
-export const filterReducer = (state = FilterState.ALL, action) => {
-  switch (action.type) {
-    case CHANGE_FILTER:
-      return action.filterState
-    default:
-      return state
-  }
-}
+export default handleActions({
+  [actions.addTask]: (state, { payload: text }) => {
+    return text.length ? {
+      ...state,
+      todo: [{
+        id: uid++,
+        done: false,
+        text
+      },
+      ...state.todo
+    ]} : state
+  },
+  [actions.updateTask]: (state, { payload: options }) => {
+    const { id, text } = options
+    if (!text) delete options.text
+    return {
+      ...state,
+      todo: state.todo.map(e => (
+        e.id === id ? { ...e, ...options } : e
+      ))
+    }
+  },
+  [actions.removeTask]: (state, { payload: id }) => ({
+    ...state,
+    todo: state.todo.filter(e => e.id !== id)
+  }),
+  [actions.clearCompleted]: (state) => ({
+    ...state,
+    todo: state.todo.filter(e => !e.done)
+  }),
+  [actions.completeAll]: (state) => ({
+    ...state,
+    todo: state.todo.map(e => ({
+      ...e, done: true
+    }))
+  }),
+  [actions.changeFilter]: (state, { payload: filterState }) => ({
+    ...state,
+    filter: filterState
+  })
+}, defaultState)

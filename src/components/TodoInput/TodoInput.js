@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addTask } from '../../actions'
+import actions from '../../actions'
 import './TodoInput.css'
 
 class TodoInput extends Component {
@@ -28,4 +28,6 @@ class TodoInput extends Component {
   }
 }
 
-export default connect(null, { addTask })(TodoInput)
+export default connect(null, {
+  addTask: actions.addTask
+})(TodoInput)

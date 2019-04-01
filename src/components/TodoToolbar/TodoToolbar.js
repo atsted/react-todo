@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { changeFilter, clearCompleted, completeAll } from '../../actions';
+import actions from '../../actions';
 import { FilterState as FS } from '../../constants';
 import './TodoToolbar.css';
 
 class TodoToolbar extends Component {
   countCompleted() {
     let done = 0
-    for (let task of this.props.tasks) {
+    for (let task of this.props.todo) {
       task.done && done++
     }
     return done
@@ -17,7 +17,7 @@ class TodoToolbar extends Component {
   }
   render() {
     const { filter } = this.props
-    const all = this.props.tasks.length
+    const all = this.props.todo.length
     const done = this.countCompleted()
     const active = all - done
     return (
@@ -50,11 +50,11 @@ class TodoToolbar extends Component {
 
 export default connect(
   state => ({
-    filter: state.filter,
-    tasks: state.todo
+    todo: state.todo,
+    filter: state.filter
   }), {
-    changeFilter,
-    clearCompleted,
-    completeAll
+    completeAll: actions.completeAll,
+    changeFilter: actions.changeFilter,
+    clearCompleted: actions.clearCompleted
   }
 )(TodoToolbar)

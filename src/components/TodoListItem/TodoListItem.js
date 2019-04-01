@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateTask, removeTask } from '../../actions'
+import actions from '../../actions'
 
 class TodoListItem extends Component {
   constructor(props) {
@@ -25,14 +25,14 @@ class TodoListItem extends Component {
   }
   save = () => {
     const { id } = this.props.task
-    const text = this.state.text.length ?
+    const text = (this.state.text.length ?
       this.state.text :
-      this.props.task.text
+      this.props.task.text).trim()
     this.props.updateTask({ id, text })
     this.setState({ isEditable: false, text })
   }
   updateLocal = event => {
-    const value = event.target.value.trim()
+    const value = event.target.value
     this.setState({ text: value })
     event.preventDefault()
   }
@@ -79,6 +79,6 @@ class TodoListItem extends Component {
 }
 
 export default connect(null, {
-  updateTask,
-  removeTask
+  updateTask: actions.updateTask,
+  removeTask: actions.removeTask
 })(TodoListItem)
