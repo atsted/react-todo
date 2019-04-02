@@ -8,8 +8,10 @@ class TodoInput extends Component {
     const form = event.target
     const input = form.name
     const value = input.value.trim()
-    this.props.addTask(value)
-    form.reset()
+    if (value.length) {
+      this.props.addTask(value)
+      form.reset()
+    }
     event.preventDefault()
   }
   render() {

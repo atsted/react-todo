@@ -2,19 +2,20 @@ import actions from './actions'
 import defaultState from './state'
 import { handleActions } from 'redux-actions'
 
-let uid = 0
-
 export default handleActions({
   [actions.addTask]: (state, { payload: text }) => {
-    return text.length ? {
+    return {
       ...state,
-      todo: [{
-        id: uid++,
-        done: false,
-        text
-      },
-      ...state.todo
-    ]} : state
+      uid: state.uid + 1,
+      todo: [
+        {
+          id: state.uid,
+          done: false,
+          text
+        },
+        ...state.todo
+      ]
+    }
   },
   [actions.updateTask]: (state, { payload: options }) => {
     const { id, text } = options
