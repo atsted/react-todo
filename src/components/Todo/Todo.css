@@ -3,12 +3,16 @@
   max-width: 720px;
 }
 .todo__button {
-  height: 2rem;
+  padding: .65rem;
   border: none;
   color: white;
   background: inherit;
   outline: none;
   cursor: pointer;
+  font-size: .7rem;
+  display: inline-block;
+  vertical-align: middle;
+  text-decoration: none;
 }
 .todo__button.active,
 .todo__button:hover {

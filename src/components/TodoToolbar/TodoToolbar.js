@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import actions from '../../actions';
 import { FilterState as FS } from '../../constants';
 import * as selectors from '../../selectors'
 import './TodoToolbar.css';
 
 class TodoToolbar extends Component {
-  changeFilter(filterState) {
-    this.props.changeFilter(filterState)
-  }
   render() {
     const { filter, all, done, active } = this.props
     return (
       <div className="todo__toolbar">
         <div className="todo__container todo__container_between">
           <div>
-            <button
-              className={"todo__button" + (filter === FS.ALL ? ' active' : '')}
-              onClick={() => this.changeFilter(FS.ALL)}>All ({all})</button>
-            <button
-              className={"todo__button" + (filter === FS.ACTIVE ? ' active' : '')}
-              onClick={() => this.changeFilter(FS.ACTIVE)}>Active ({active})</button>
-            <button
-              className={"todo__button" + (filter === FS.DONE ? ' active' : '')}
-              onClick={() => this.changeFilter(FS.DONE)}>Done ({done})</button>
+            <Link
+              className={"todo__button" + (filter.visibility === FS.ALL ? ' active' : '')}
+              to="/all">All ({all})</Link>
+            <Link
+              className={"todo__button" + (filter.visibility === FS.ACTIVE ? ' active' : '')}
+              to="/active">Active ({active})</Link>
+            <Link
+              className={"todo__button" + (filter.visibility === FS.DONE ? ' active' : '')}
+              to="/done">Done ({done})</Link>
           </div>
           {all ?
           <div>
@@ -55,7 +53,6 @@ export default connect(
   }), {
     completeAll: actions.completeAll,
     uncompleteAll: actions.uncompleteAll,
-    changeFilter: actions.changeFilter,
     clearCompleted: actions.clearCompleted
   }
 )(TodoToolbar)

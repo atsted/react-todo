@@ -4,8 +4,8 @@ import { FilterState } from '../constants';
 export const getVisibleTasks = createSelector([
   state => state.filter,
   state => state.todo
-], (filter, todo) => {
-  switch (filter) {
+], ({ visibility, priority }, todo) => {
+  switch (visibility) {
     case FilterState.ACTIVE:
       return todo.filter(e => !e.done)
     case FilterState.DONE:

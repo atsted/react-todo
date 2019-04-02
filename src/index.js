@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
@@ -15,7 +16,11 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <BrowserRouter>
+      <div>
+        <Route path="/:visibility?/:priority?" component={App} />
+      </div>
+    </BrowserRouter>
   </Provider>, 
   document.getElementById('root')
 );
