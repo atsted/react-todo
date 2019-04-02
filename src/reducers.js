@@ -41,6 +41,12 @@ export default handleActions({
       ...e, done: true
     }))
   }),
+  [actions.uncompleteAll]: (state) => ({
+    ...state,
+    todo: state.todo.map(e => ({
+      ...e, done: false
+    }))
+  }),
   [actions.changeFilter]: (state, { payload: filterState }) => ({
     ...state,
     filter: filterState

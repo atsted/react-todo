@@ -25,14 +25,21 @@ class TodoToolbar extends Component {
               className={"todo__button" + (filter === FS.DONE ? ' active' : '')}
               onClick={() => this.changeFilter(FS.DONE)}>Done ({done})</button>
           </div>
+          {all ?
           <div>
+            {all === done ?
+            <button
+              className="todo__button"
+              onClick={this.props.uncompleteAll}>Uncomplete all</button> :
             <button
               className="todo__button"
               onClick={this.props.completeAll}>Complete all</button>
+            }
             <button
               className="todo__button"
               onClick={this.props.clearCompleted}>Clear completed</button>
-          </div>
+          </div> : null
+          }
         </div>
       </div>
     )
@@ -47,6 +54,7 @@ export default connect(
     filter: state.filter
   }), {
     completeAll: actions.completeAll,
+    uncompleteAll: actions.uncompleteAll,
     changeFilter: actions.changeFilter,
     clearCompleted: actions.clearCompleted
   }
