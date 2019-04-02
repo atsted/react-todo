@@ -11,6 +11,7 @@ export default handleActions({
         {
           id: state.uid,
           done: false,
+          priority: 0,
           text
         },
         ...state.todo

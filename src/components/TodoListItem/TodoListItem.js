@@ -36,14 +36,23 @@ class TodoListItem extends Component {
     this.setState({ text: value })
     event.preventDefault()
   }
+  updatePriority(value) {
+    const min = 0
+    const max = 4
+    value = value < min ? min : value > max ? max : value
+    this.props.updateTask({
+      id: this.props.task.id,
+      priority: value 
+    })
+  }
   componentDidUpdate() {
     this.inputRef && this.inputRef.focus()
   }
   render() {
-    const { id, done, text } = this.props.task
+    const { id, done, text, priority } = this.props.task
     const taskId = `task-${id}`
     return (
-      <li className="todo-list__item">
+      <li className={`todo-list__item todo-list__item_${priority}`}>
         <div>
           <input
             id={taskId}
@@ -68,6 +77,16 @@ class TodoListItem extends Component {
             onDoubleClick={this.makeEditable}
             className="todo-list__name">{text}</p>
         )}
+        <button
+          className="todo-list__button"
+          onClick={() => this.updatePriority(priority - 1)}>
+          <span>&darr;</span>
+        </button>
+        <button
+          className="todo-list__button"
+          onClick={() => this.updatePriority(priority + 1)}>
+          <span>&uarr;</span>
+        </button>
         <button
           className="todo-list__button"
           onClick={this.remove}>
