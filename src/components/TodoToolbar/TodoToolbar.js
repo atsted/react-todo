@@ -15,29 +15,34 @@ class TodoToolbar extends Component {
           <div>
             <Link
               className={"todo__button" + (filter.visibility === FS.ALL ? ' active' : '')}
-              to="/all">All ({all})</Link>
+              to={`/all/${filter.priority}`}>All ({all})</Link>
             <Link
               className={"todo__button" + (filter.visibility === FS.ACTIVE ? ' active' : '')}
-              to="/active">Active ({active})</Link>
+              to={`/active/${filter.priority}`}>Active ({active})</Link>
             <Link
               className={"todo__button" + (filter.visibility === FS.DONE ? ' active' : '')}
-              to="/done">Done ({done})</Link>
+              to={`/done/${filter.priority}`}>Done ({done})</Link>
           </div>
-          {all ?
-          <div>
-            {all === done ?
-            <button
-              className="todo__button"
-              onClick={this.props.uncompleteAll}>Uncomplete all</button> :
-            <button
-              className="todo__button"
-              onClick={this.props.completeAll}>Complete all</button>
+          <div className="display-flex">
+            {all ?
+            <div>
+              {all === done ?
+              <button
+                className="todo__button"
+                onClick={this.props.uncompleteAll}>Uncomplete all</button> :
+              <button
+                className="todo__button"
+                onClick={this.props.completeAll}>Complete all</button>
+              }
+              <button
+                className="todo__button"
+                onClick={this.props.clearCompleted}>Clear completed</button>
+            </div> : null
             }
-            <button
+            <Link
               className="todo__button"
-              onClick={this.props.clearCompleted}>Clear completed</button>
-          </div> : null
-          }
+              to="/all/-1">Reset filters</Link>
+          </div>
         </div>
       </div>
     )

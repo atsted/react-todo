@@ -20,6 +20,5 @@ class TodoList extends Component {
 }
 
 export default connect(state => ({
-  tasks: getVisibleTasks(state),
-  filterState: state.filter
+  tasks: getVisibleTasks(state)
 }))(TodoList)

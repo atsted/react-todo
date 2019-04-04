@@ -5,10 +5,17 @@ import Todo from './components/Todo/Todo'
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.updateByUrlParams(props.match.params)
+  }
   componentWillReceiveProps(nextProps) {
-    let { visibility, priority } = nextProps.match.params
+    this.updateByUrlParams(nextProps.match.params)
+  }
+  updateByUrlParams(params) {
+    let { visibility, priority } = params
     visibility = (visibility || '').toUpperCase()
-    priority = (priority || '').toUpperCase()
+    priority = +(priority || 0)
     this.props.changeFilter({ visibility, priority })
   }
   render() {

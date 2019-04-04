@@ -1,7 +1,18 @@
 import { FilterState } from './constants';
 
-export default {
+let localState = localStorage.getItem('todo')
+try {
+  localState = JSON.parse(localState)
+} catch (e) {
+  localState = null
+  console.error(e)
+}
+
+export default localState || {
   uid: 0,
   todo: [],
-  filter: FilterState.ALL
+  filter: {
+    visibility: FilterState.ALL,
+    priority: -1
+  }
 }

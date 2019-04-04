@@ -38,7 +38,7 @@ class TodoListItem extends Component {
   }
   updatePriority(value) {
     const min = 0
-    const max = 4
+    const max = 3
     value = value < min ? min : value > max ? max : value
     this.props.updateTask({
       id: this.props.task.id,

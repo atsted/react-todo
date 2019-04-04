@@ -14,6 +14,11 @@ const store = createStore(
   applyMiddleware(logger)
 )
 
+store.subscribe(() => {
+  const newState = JSON.stringify(store.getState())
+  localStorage.setItem('todo', newState)
+})
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
