@@ -6,6 +6,8 @@ class TodoListItem extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      minPriority: 0,
+      maxPriority: 3,
       isEditable: false,
       text: this.props.task.text
     }
@@ -37,9 +39,6 @@ class TodoListItem extends Component {
     event.preventDefault()
   }
   updatePriority(value) {
-    const min = 0
-    const max = 3
-    value = value < min ? min : value > max ? max : value
     this.props.updateTask({
       id: this.props.task.id,
       priority: value 
@@ -79,12 +78,14 @@ class TodoListItem extends Component {
         )}
         <button
           className="todo-list__button"
-          onClick={() => this.updatePriority(priority - 1)}>
+          onClick={() => this.updatePriority(priority - 1)}
+          disabled={priority <= this.state.minPriority}>
           <span>&darr;</span>
         </button>
         <button
           className="todo-list__button"
-          onClick={() => this.updatePriority(priority + 1)}>
+          onClick={() => this.updatePriority(priority + 1)}
+          disabled={priority >= this.state.maxPriority}>
           <span>&uarr;</span>
         </button>
         <button
