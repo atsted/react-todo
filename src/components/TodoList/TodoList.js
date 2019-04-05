@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import TodoListItem from '../TodoListItem/TodoListItem'
 import { getVisibleTasks } from '../../selectors'
 import './TodoList.css'
 
 class TodoList extends Component {
+  static propTypes = {
+    tasks: PropTypes.array
+  }
   render() {
     return (
       <ul className="todo-list">{

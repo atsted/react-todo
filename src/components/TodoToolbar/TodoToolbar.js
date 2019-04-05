@@ -2,25 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import actions from '../../actions';
-import { FilterState as FS } from '../../constants';
-import * as selectors from '../../selectors'
+import { FilterState } from '../../constants';
+import * as selectors from '../../selectors';
+import PropTypes from 'prop-types';
 import './TodoToolbar.css';
 
 class TodoToolbar extends Component {
+  static propTypes = {
+    all: PropTypes.number,
+    done: PropTypes.number,
+    active: PropTypes.number,
+    completeAll: PropTypes.func,
+    uncompleteAll: PropTypes.func,
+    clearCompleted: PropTypes.func,
+    filter: PropTypes.shape({
+      visibility: PropTypes.string,
+      priority: PropTypes.number
+    })
+  }
   render() {
-    const { filter, all, done, active } = this.props
+    const {
+      filter, all, done, active,
+      completeAll, uncompleteAll, clearCompleted
+    } = this.props
     return (
       <div className="todo__toolbar">
         <div className="todo__container todo__container_between">
           <div>
             <Link
-              className={"todo__button" + (filter.visibility === FS.ALL ? ' active' : '')}
+              className={"todo__button" + (filter.visibility === FilterState.ALL ? ' active' : '')}
               to={`/all/${filter.priority}`}>All ({all})</Link>
             <Link
-              className={"todo__button" + (filter.visibility === FS.ACTIVE ? ' active' : '')}
+              className={"todo__button" + (filter.visibility === FilterState.ACTIVE ? ' active' : '')}
               to={`/active/${filter.priority}`}>Active ({active})</Link>
             <Link
-              className={"todo__button" + (filter.visibility === FS.DONE ? ' active' : '')}
+              className={"todo__button" + (filter.visibility === FilterState.DONE ? ' active' : '')}
               to={`/done/${filter.priority}`}>Done ({done})</Link>
           </div>
           <div className="display-flex">
@@ -29,14 +45,14 @@ class TodoToolbar extends Component {
               {all === done ?
               <button
                 className="todo__button"
-                onClick={this.props.uncompleteAll}>Uncomplete all</button> :
+                onClick={uncompleteAll}>Uncomplete all</button> :
               <button
                 className="todo__button"
-                onClick={this.props.completeAll}>Complete all</button>
+                onClick={completeAll}>Complete all</button>
               }
               <button
                 className="todo__button"
-                onClick={this.props.clearCompleted}>Clear completed</button>
+                onClick={clearCompleted}>Clear completed</button>
             </div> : null
             }
             <Link
@@ -54,7 +70,7 @@ export default connect(
     all: selectors.getTotalNumber(state),
     done: selectors.getCompletedNumber(state),
     active: selectors.getActivesNumber(state),
-    filter: state.filter
+    filter: selectors.getFilter(state)
   }), {
     completeAll: actions.completeAll,
     uncompleteAll: actions.uncompleteAll,

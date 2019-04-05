@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getFilter } from '../../selectors';
+import PropTypes from 'prop-types';
 
 class TodoPriorityFilter extends Component {
+  static propTypes = {
+    filter: PropTypes.shape({
+      visibility: PropTypes.string,
+      priority: PropTypes.number
+    })
+  }
   constructor(props) {
     super(props)
     this.state = {
@@ -41,5 +49,5 @@ class TodoPriorityFilter extends Component {
 }
 
 export default connect(state => ({
-  filter: state.filter
+  filter: getFilter(state)
 }))(TodoPriorityFilter)

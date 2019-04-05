@@ -1,13 +1,13 @@
 import { FilterState } from '../constants'
 
 export const getVisibleTasks = (filter = {}, todo = []) => {
-  const { priority: p, visibility: v } = filter
-  return todo.filter(x => (
-    (p === -1 || x.priority === p) &&
-      (v === FilterState.ACTIVE ?
-        !x.done :
-        v === FilterState.DONE ?
-          !!x.done :
+  const { priority, visibility } = filter
+  return todo.filter(element => (
+    (priority === -1 || element.priority === priority) &&
+      (visibility === FilterState.ACTIVE ?
+        !element.done :
+        visibility === FilterState.DONE ?
+          !!element.done :
           true)
   ))
 }

@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import actions from '../../actions'
 import './TodoInput.css'
 
 class TodoInput extends Component {
+  static propTypes = {
+    addTask: PropTypes.func
+  }
   addTask = event => {
     const form = event.target
     const input = form.name

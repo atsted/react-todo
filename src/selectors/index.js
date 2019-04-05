@@ -2,8 +2,8 @@ import * as helpers from '../helpers';
 import { createSelector } from 'reselect';
 import { FilterState } from '../constants';
 
-const getFilter = state => state.filter
-const getTodo = state => state.todo
+export const getFilter = state => state.filter
+export const getTodo = state => state.todo
 
 export const getVisibleTasks = createSelector(
   [ getFilter, getTodo ],

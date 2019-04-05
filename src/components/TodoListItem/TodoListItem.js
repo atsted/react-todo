@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import actions from '../../actions'
+import PropTypes from 'prop-types'
 
 class TodoListItem extends Component {
+  static propTypes = {
+    task: PropTypes.object,
+    updateTask: PropTypes.func,
+    removeTask: PropTypes.func
+  }
   constructor(props) {
     super(props)
     this.state = {

@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FilterState } from './constants';
 import actions from './actions';
-import Todo from './components/Todo/Todo'
+import Todo from './components/Todo/Todo';
+import PropTypes from 'prop-types';
 import './App.css';
 
 class App extends Component {
+  static propTypes = {
+    match: PropTypes.object,
+    changeFilter: PropTypes.func
+  }
   constructor(props) {
     super(props)
     this.updateByUrlParams(props.match.params)
@@ -14,8 +20,8 @@ class App extends Component {
   }
   updateByUrlParams(params) {
     let { visibility, priority } = params
-    visibility = (visibility || '').toUpperCase()
-    priority = +(priority || 0)
+    visibility = (visibility || FilterState.ALL).toUpperCase()
+    priority = +(priority || -1)
     this.props.changeFilter({ visibility, priority })
   }
   render() {
