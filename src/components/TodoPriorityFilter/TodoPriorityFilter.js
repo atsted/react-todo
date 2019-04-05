@@ -10,7 +10,8 @@ class TodoPriorityFilter extends Component {
         { value: 3, text: 'Important & Urgent' },
         { value: 2, text: 'Important & Not urgent' },
         { value: 1, text: 'Not important & Urgent' },
-        { value: 0, text: 'Not important & Not urgent' }
+        { value: 0, text: 'Not important & Not urgent' },
+        { value: -1, text: 'All' }
       ]
     }
   }
@@ -19,7 +20,7 @@ class TodoPriorityFilter extends Component {
     visibility = visibility.toLowerCase()
     return (
       <div className="todo__priorities">
-        <p>By priority: </p>
+        <p>Priority: </p>
         { this.state.filters.map(e => {
             const href = `/${visibility}/${e.value}`
             let className = `todo__priority todo__priority_${e.value}`

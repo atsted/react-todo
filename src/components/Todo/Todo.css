@@ -41,6 +41,17 @@
   border-radius: 4px;
   border: 1px solid #f3f4f5;
 }
+@keyframes bg {
+  0% { background-position: 0% 0%; }
+  33% { background-position: 0% 100%; }
+  66% { background-position: 100% 100%; }
+  100% { background-position: 0% 100%; }
+}
+.todo__priority_-1:before {
+  background: linear-gradient(135deg, white, red);
+  background-size: 200%;
+  animation: bg 10s ease infinite
+}
 .todo__priority_1:before {
   background: rgba(255, 0, 0, .2)
 }
