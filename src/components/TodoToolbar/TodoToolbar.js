@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import actions from '../../actions';
 import { FilterState } from '../../constants';
-import * as selectors from '../../selectors';
 import PropTypes from 'prop-types';
 import './TodoToolbar.css';
+import {
+  completeAll,
+  uncompleteAll,
+  clearCompleted
+} from '../../actions';
+import {
+  getTotalNumber,
+  getActivesNumber,
+  getCompletedNumber,
+  getFilter
+} from '../../selectors';
 
 class TodoToolbar extends Component {
   static propTypes = {
@@ -67,13 +76,13 @@ class TodoToolbar extends Component {
 
 export default connect(
   state => ({
-    all: selectors.getTotalNumber(state),
-    done: selectors.getCompletedNumber(state),
-    active: selectors.getActivesNumber(state),
-    filter: selectors.getFilter(state)
+    all: getTotalNumber(state),
+    done: getCompletedNumber(state),
+    active: getActivesNumber(state),
+    filter: getFilter(state)
   }), {
-    completeAll: actions.completeAll,
-    uncompleteAll: actions.uncompleteAll,
-    clearCompleted: actions.clearCompleted
+    completeAll,
+    uncompleteAll,
+    clearCompleted
   }
 )(TodoToolbar)

@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import actions from '../../actions'
+import { updateTask, removeTask } from '../../actions'
 import PropTypes from 'prop-types'
 
 class TodoListItem extends Component {
   static propTypes = {
-    task: PropTypes.object.isRequired,
+    task: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+      done: PropTypes.bool.isRequired
+    }).isRequired,
     updateTask: PropTypes.func.isRequired,
     removeTask: PropTypes.func.isRequired
   }
@@ -105,6 +109,6 @@ class TodoListItem extends Component {
 }
 
 export default connect(null, {
-  updateTask: actions.updateTask,
-  removeTask: actions.removeTask
+  updateTask,
+  removeTask
 })(TodoListItem)

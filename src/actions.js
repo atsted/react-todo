@@ -9,7 +9,16 @@ import {
   UNCOMPLETE_ALL
 } from './actionTypes';
 
-export default createActions(
+export const {
+  addTask,
+  updateTask,
+  removeTask,
+  changeTask,
+  changeFilter,
+  clearCompleted,
+  completeAll,
+  uncompleteAll
+} = createActions(
   ADD_TASK,
   UPDATE_TASK,
   REMOVE_TASK,

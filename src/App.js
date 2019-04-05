@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FilterState } from './constants';
-import actions from './actions';
+import { changeFilter } from './actions';
 import Todo from './components/Todo/Todo';
 import PropTypes from 'prop-types';
 import './App.css';
@@ -33,6 +33,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, {
-  changeFilter: actions.changeFilter
-})(App);
+export default connect(null, { changeFilter })(App);

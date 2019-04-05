@@ -1,11 +1,19 @@
-import actions from './actions'
 import defaultState from './state'
 import { handleActions } from 'redux-actions'
 import { getVisibleTaskIds } from './helpers'
+import {
+  addTask,
+  updateTask,
+  removeTask,
+  clearCompleted,
+  completeAll,
+  uncompleteAll,
+  changeFilter
+} from './actions'
 
 export default handleActions({
 
-  [actions.addTask]: (state, { payload: text }) => {
+  [addTask]: (state, { payload: text }) => {
     return {
       ...state,
       uid: state.uid + 1,
@@ -21,7 +29,7 @@ export default handleActions({
     }
   },
 
-  [actions.updateTask]: (state, { payload: options }) => {
+  [updateTask]: (state, { payload: options }) => {
     const { id, text } = options
     if (!text) delete options.text
     return {
@@ -32,12 +40,12 @@ export default handleActions({
     }
   },
 
-  [actions.removeTask]: (state, { payload: id }) => ({
+  [removeTask]: (state, { payload: id }) => ({
     ...state,
     todo: state.todo.filter(e => e.id !== id)
   }),
 
-  [actions.clearCompleted]: (state) => {
+  [clearCompleted]: (state) => {
     const filteredTodoIds = getVisibleTaskIds(
       state.filter, state.todo
     )
@@ -49,7 +57,7 @@ export default handleActions({
     }
   },
 
-  [actions.completeAll]: (state) => {
+  [completeAll]: (state) => {
     const filteredTodoIds = getVisibleTaskIds(
       state.filter, state.todo
     )
@@ -63,7 +71,7 @@ export default handleActions({
     }
   },
 
-  [actions.uncompleteAll]: (state) => {
+  [uncompleteAll]: (state) => {
     const filteredTodoIds = getVisibleTaskIds(
       state.filter, state.todo
     )
@@ -77,7 +85,7 @@ export default handleActions({
     }
   },
 
-  [actions.changeFilter]: (state, { payload: filterState }) => ({
+  [changeFilter]: (state, { payload: filterState }) => ({
     ...state,
     filter: filterState
   })

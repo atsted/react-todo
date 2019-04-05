@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import actions from '../../actions'
+import { addTask } from '../../actions'
 import './TodoInput.css'
 
 class TodoInput extends Component {
@@ -34,6 +34,4 @@ class TodoInput extends Component {
   }
 }
 
-export default connect(null, {
-  addTask: actions.addTask
-})(TodoInput)
+export default connect(null, { addTask })(TodoInput)
