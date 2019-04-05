@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 class TodoPriorityFilter extends Component {
   static propTypes = {
     filter: PropTypes.shape({
-      visibility: PropTypes.string,
-      priority: PropTypes.number
-    })
+      visibility: PropTypes.string.isRequired,
+      priority: PropTypes.number.isRequired
+    }).isRequired
   }
   constructor(props) {
     super(props)

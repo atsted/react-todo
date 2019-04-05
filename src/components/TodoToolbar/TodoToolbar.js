@@ -9,16 +9,16 @@ import './TodoToolbar.css';
 
 class TodoToolbar extends Component {
   static propTypes = {
-    all: PropTypes.number,
-    done: PropTypes.number,
-    active: PropTypes.number,
-    completeAll: PropTypes.func,
-    uncompleteAll: PropTypes.func,
-    clearCompleted: PropTypes.func,
+    all: PropTypes.number.isRequired,
+    done: PropTypes.number.isRequired,
+    active: PropTypes.number.isRequired,
+    completeAll: PropTypes.func.isRequired,
+    uncompleteAll: PropTypes.func.isRequired,
+    clearCompleted: PropTypes.func.isRequired,
     filter: PropTypes.shape({
-      visibility: PropTypes.string,
-      priority: PropTypes.number
-    })
+      visibility: PropTypes.string.isRequired,
+      priority: PropTypes.number.isRequired
+    }).isRequired
   }
   render() {
     const {

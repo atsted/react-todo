@@ -7,7 +7,7 @@ import './TodoList.css'
 
 class TodoList extends Component {
   static propTypes = {
-    tasks: PropTypes.array
+    tasks: PropTypes.array.isRequired
   }
   render() {
     return (

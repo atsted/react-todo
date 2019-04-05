@@ -1,6 +1,5 @@
 import * as helpers from '../helpers';
 import { createSelector } from 'reselect';
-import { FilterState } from '../constants';
 
 export const getFilter = state => state.filter
 export const getTodo = state => state.todo
@@ -11,25 +10,16 @@ export const getVisibleTasks = createSelector(
 )
 
 export const getCompletedNumber = createSelector(
-  [ getFilter, getTodo ],
-  (filter, todo) => helpers.getVisibleTasks({
-    ...filter,
-    visibility: FilterState.DONE
-  }, todo).length
+  getTodo,
+  todo => todo.filter(e => e.done).length
 )
 
 export const getActivesNumber = createSelector(
-  [ getFilter, getTodo ],
-  (filter, todo) => helpers.getVisibleTasks({
-    ...filter,
-    visibility: FilterState.ACTIVE
-  }, todo).length
+  getTodo,
+  todo => todo.filter(e => !e.done).length
 )
 
 export const getTotalNumber = createSelector(
-  [ getFilter, getTodo ],
-  (filter, todo) => helpers.getVisibleTasks({
-    ...filter,
-    visibility: null
-  }, todo).length
+  getTodo,
+  todo => todo.length
 )

@@ -6,7 +6,7 @@ import './TodoInput.css'
 
 class TodoInput extends Component {
   static propTypes = {
-    addTask: PropTypes.func
+    addTask: PropTypes.func.isRequired
   }
   addTask = event => {
     const form = event.target

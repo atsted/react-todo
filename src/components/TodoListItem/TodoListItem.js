@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 
 class TodoListItem extends Component {
   static propTypes = {
-    task: PropTypes.object,
-    updateTask: PropTypes.func,
-    removeTask: PropTypes.func
+    task: PropTypes.object.isRequired,
+    updateTask: PropTypes.func.isRequired,
+    removeTask: PropTypes.func.isRequired
   }
   constructor(props) {
     super(props)

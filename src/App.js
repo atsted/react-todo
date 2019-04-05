@@ -8,15 +8,15 @@ import './App.css';
 
 class App extends Component {
   static propTypes = {
-    match: PropTypes.object,
-    changeFilter: PropTypes.func
+    match: PropTypes.object.isRequired,
+    changeFilter: PropTypes.func.isRequired
   }
   constructor(props) {
     super(props)
     this.updateByUrlParams(props.match.params)
   }
-  componentWillReceiveProps(nextProps) {
-    this.updateByUrlParams(nextProps.match.params)
+  componentDidUpdate() {
+    this.updateByUrlParams(this.props.match.params)
   }
   updateByUrlParams(params) {
     let { visibility, priority } = params
