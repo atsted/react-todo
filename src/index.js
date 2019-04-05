@@ -1,17 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from './reducers'
+import logger from 'redux-logger';
+import reducers from './reducers';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(reducers)
+const store = createStore(
+  reducers,
+  applyMiddleware(logger)
+)
+
+store.subscribe(() => {
+  const newState = JSON.stringify(store.getState())
+  localStorage.setItem('todo', newState)
+})
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <BrowserRouter>
+      <div>
+        <Route path="/:visibility?/:priority?" component={App} />
+      </div>
+    </BrowserRouter>
   </Provider>, 
   document.getElementById('root')
 );

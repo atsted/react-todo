@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import actions from '../../actions'
 import './TodoInput.css'
 
 class TodoInput extends Component {
+  static propTypes = {
+    addTask: PropTypes.func.isRequired
+  }
   addTask = event => {
     const form = event.target
     const input = form.name
     const value = input.value.trim()
-    this.props.addTask(value)
-    form.reset()
+    if (value.length) {
+      this.props.addTask(value)
+      form.reset()
+    }
     event.preventDefault()
   }
   render() {

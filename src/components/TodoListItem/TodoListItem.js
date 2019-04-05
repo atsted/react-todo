@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import actions from '../../actions'
+import PropTypes from 'prop-types'
 
 class TodoListItem extends Component {
+  static propTypes = {
+    task: PropTypes.object.isRequired,
+    updateTask: PropTypes.func.isRequired,
+    removeTask: PropTypes.func.isRequired
+  }
   constructor(props) {
     super(props)
     this.state = {
+      minPriority: 0,
+      maxPriority: 3,
       isEditable: false,
       text: this.props.task.text
     }
@@ -36,14 +44,20 @@ class TodoListItem extends Component {
     this.setState({ text: value })
     event.preventDefault()
   }
+  updatePriority(value) {
+    this.props.updateTask({
+      id: this.props.task.id,
+      priority: value 
+    })
+  }
   componentDidUpdate() {
     this.inputRef && this.inputRef.focus()
   }
   render() {
-    const { id, done, text } = this.props.task
+    const { id, done, text, priority } = this.props.task
     const taskId = `task-${id}`
     return (
-      <li className="todo-list__item">
+      <li className={`todo-list__item todo-list__item_${priority}`}>
         <div>
           <input
             id={taskId}
@@ -68,6 +82,18 @@ class TodoListItem extends Component {
             onDoubleClick={this.makeEditable}
             className="todo-list__name">{text}</p>
         )}
+        <button
+          className="todo-list__button"
+          onClick={() => this.updatePriority(priority - 1)}
+          disabled={priority <= this.state.minPriority}>
+          <span>&darr;</span>
+        </button>
+        <button
+          className="todo-list__button"
+          onClick={() => this.updatePriority(priority + 1)}
+          disabled={priority >= this.state.maxPriority}>
+          <span>&uarr;</span>
+        </button>
         <button
           className="todo-list__button"
           onClick={this.remove}>

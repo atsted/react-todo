@@ -1,46 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import actions from '../../actions';
-import { FilterState as FS } from '../../constants';
+import { FilterState } from '../../constants';
+import * as selectors from '../../selectors';
+import PropTypes from 'prop-types';
 import './TodoToolbar.css';
 
 class TodoToolbar extends Component {
-  countCompleted() {
-    let done = 0
-    for (let task of this.props.todo) {
-      task.done && done++
-    }
-    return done
-  }
-  changeFilter(filterState) {
-    this.props.changeFilter(filterState)
+  static propTypes = {
+    all: PropTypes.number.isRequired,
+    done: PropTypes.number.isRequired,
+    active: PropTypes.number.isRequired,
+    completeAll: PropTypes.func.isRequired,
+    uncompleteAll: PropTypes.func.isRequired,
+    clearCompleted: PropTypes.func.isRequired,
+    filter: PropTypes.shape({
+      visibility: PropTypes.string.isRequired,
+      priority: PropTypes.number.isRequired
+    }).isRequired
   }
   render() {
-    const { filter } = this.props
-    const all = this.props.todo.length
-    const done = this.countCompleted()
-    const active = all - done
+    const {
+      filter, all, done, active,
+      completeAll, uncompleteAll, clearCompleted
+    } = this.props
     return (
       <div className="todo__toolbar">
         <div className="todo__container todo__container_between">
           <div>
-            <button
-              className={"todo__button" + (filter === FS.ALL ? ' active' : '')}
-              onClick={() => this.changeFilter(FS.ALL)}>All ({all})</button>
-            <button
-              className={"todo__button" + (filter === FS.ACTIVE ? ' active' : '')}
-              onClick={() => this.changeFilter(FS.ACTIVE)}>Active ({active})</button>
-            <button
-              className={"todo__button" + (filter === FS.DONE ? ' active' : '')}
-              onClick={() => this.changeFilter(FS.DONE)}>Done ({done})</button>
+            <Link
+              className={"todo__button" + (filter.visibility === FilterState.ALL ? ' active' : '')}
+              to={`/all/${filter.priority}`}>All ({all})</Link>
+            <Link
+              className={"todo__button" + (filter.visibility === FilterState.ACTIVE ? ' active' : '')}
+              to={`/active/${filter.priority}`}>Active ({active})</Link>
+            <Link
+              className={"todo__button" + (filter.visibility === FilterState.DONE ? ' active' : '')}
+              to={`/done/${filter.priority}`}>Done ({done})</Link>
           </div>
-          <div>
-            <button
-              className="todo__button"
-              onClick={this.props.completeAll}>Complete all</button>
+          <div className="display-flex">
+            {all ?
+            <div>
+              {all === done ?
               <button
                 className="todo__button"
-                onClick={this.props.clearCompleted}>Clear completed</button>
+                onClick={uncompleteAll}>Uncomplete all</button> :
+              <button
+                className="todo__button"
+                onClick={completeAll}>Complete all</button>
+              }
+              <button
+                className="todo__button"
+                onClick={clearCompleted}>Clear completed</button>
+            </div> : null
+            }
+            <Link
+              className="todo__button"
+              to="/all/-1">Reset filters</Link>
           </div>
         </div>
       </div>
@@ -50,11 +67,13 @@ class TodoToolbar extends Component {
 
 export default connect(
   state => ({
-    todo: state.todo,
-    filter: state.filter
+    all: selectors.getTotalNumber(state),
+    done: selectors.getCompletedNumber(state),
+    active: selectors.getActivesNumber(state),
+    filter: selectors.getFilter(state)
   }), {
     completeAll: actions.completeAll,
-    changeFilter: actions.changeFilter,
+    uncompleteAll: actions.uncompleteAll,
     clearCompleted: actions.clearCompleted
   }
 )(TodoToolbar)

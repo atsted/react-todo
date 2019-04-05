@@ -1,24 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import TodoListItem from '../TodoListItem/TodoListItem'
-import { FilterState } from '../../constants'
+import { getVisibleTasks } from '../../selectors'
 import './TodoList.css'
 
 class TodoList extends Component {
-  getFilteredTasks() {
-    switch (this.props.filterState) {
-      case FilterState.ACTIVE:
-        return this.props.tasks.filter(e => !e.done)
-      case FilterState.DONE:
-        return this.props.tasks.filter(e => e.done)
-      default:
-        return this.props.tasks
-    }
+  static propTypes = {
+    tasks: PropTypes.array.isRequired
   }
   render() {
     return (
       <ul className="todo-list">{
-        this.getFilteredTasks().map(item => (
+        this.props.tasks.map(item => (
           <TodoListItem
             key={item.id}
             task={item}
@@ -30,6 +24,5 @@ class TodoList extends Component {
 }
 
 export default connect(state => ({
-  tasks: state.todo,
-  filterState: state.filter
+  tasks: getVisibleTasks(state)
 }))(TodoList)

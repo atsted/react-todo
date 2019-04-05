@@ -5,7 +5,8 @@ import {
   REMOVE_TASK,
   CHANGE_FILTER,
   CLEAR_COMPLETED,
-  COMPLETE_ALL
+  COMPLETE_ALL,
+  UNCOMPLETE_ALL
 } from './actionTypes';
 
 export default createActions(
@@ -14,5 +15,6 @@ export default createActions(
   REMOVE_TASK,
   CHANGE_FILTER,
   CLEAR_COMPLETED,
-  COMPLETE_ALL
+  COMPLETE_ALL,
+  UNCOMPLETE_ALL
 )

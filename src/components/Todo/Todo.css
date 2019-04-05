@@ -3,14 +3,61 @@
   max-width: 720px;
 }
 .todo__button {
-  height: 2rem;
+  padding: .65rem;
   border: none;
   color: white;
   background: inherit;
   outline: none;
   cursor: pointer;
+  font-size: .7rem;
+  display: inline-block;
+  vertical-align: middle;
+  text-decoration: none;
 }
 .todo__button.active,
 .todo__button:hover {
   background: #002244;
+}
+.todo__priorities {
+  display: flex;
+  align-items: center;
+  font-size: .7rem;
+}
+.todo__priority {
+  margin-left: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+.todo__priority.active {
+  text-decoration: underline
+}
+.todo__priority:before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  margin-right: 4px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  border: 1px solid #f3f4f5;
+}
+@keyframes bg {
+  0% { background-position: 0% 0%; }
+  33% { background-position: 0% 100%; }
+  66% { background-position: 100% 100%; }
+  100% { background-position: 0% 100%; }
+}
+.todo__priority_-1:before {
+  background: linear-gradient(135deg, white, red);
+  background-size: 200%;
+  animation: bg 10s ease infinite
+}
+.todo__priority_1:before {
+  background: rgba(255, 0, 0, .2)
+}
+.todo__priority_2:before {
+  background: rgba(255, 0, 0, .5)
+}
+.todo__priority_3:before {
+  background: rgba(255, 0, 0, 1)
 }
